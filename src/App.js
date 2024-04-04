@@ -12,14 +12,19 @@ function App() {
   const handleSearchParam = async (param) =>{
     setSearchParam(param);
 
-    searchAPI(param);
+    if(gifs.length > 0){
+      setGifs([]);
+      setOffset(0);
+    }
+
+    searchAPI(param, offset);
   }
 
   const searchAPI = async (param, offset) => {
     let searchResults = await axiosAPI(param, offset);
+    let newSearchResult = [];
 
-    let newSearchResult = [...gifs, ...searchResults];
-
+    newSearchResult = [...gifs, ...searchResults];
     setGifs(newSearchResult);
   }
 
@@ -28,8 +33,8 @@ function App() {
     setOffset(0);
   };
 
-  const loadMore = async (limit) => {
-    const newOffset = offset + limit;
+  const loadMore = async () => {
+    const newOffset = offset + 25;
     setOffset(newOffset);
 
     searchAPI(searchParam, newOffset);
@@ -37,8 +42,7 @@ function App() {
 
   return (
     <>
-      <h1>Search Gifs</h1>
-      <SearchBar onSubmit={handleSearchParam} onClear={clearSearch} />
+      <SearchBar onSubmit={handleSearchParam} onClick={clearSearch} />
       <GifList gifs={gifs} handleLoadMore={loadMore} />
     </>
   );

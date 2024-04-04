@@ -1,8 +1,16 @@
 import React, { useState } from 'react'
+import { 
+    ClearButton,
+    ClearButtonContainer,
+    InputParam, 
+    SearchBarContainer, 
+    SearchButton,
+    SearchForm, 
+    TitlePage } from './SearchBar.style';
 
 export default function SearchBar({
     onSubmit = () => {},
-    clearSearch = () => {}
+    onClick = () => {}
 }) {
     const [searchParam, setSearchParam] = useState('')
 
@@ -16,17 +24,20 @@ export default function SearchBar({
     };
 
     const clearSearchParam = () => {
-        setSearchParam('')
-        clearSearch();
+        onClick();
+        setSearchParam('');
     };
 
   return (
-    <>
-        <form onSubmit={handleClick}>
-            <input type="text" name="paramInput" id="paramInput" onChange={onChange} value={searchParam} />
-            <button type="submit" id="submitSearch">Search</button>
-        </form>
-        <button type="button" id="cleanSearch" onClick={clearSearchParam}>Clear Search</button>
-    </>
+    <SearchBarContainer>
+        <TitlePage>Gifs with Giphy</TitlePage>
+        <SearchForm onSubmit={handleClick}>
+            <InputParam type="text" name="paramInput" id="paramInput" onChange={onChange} value={searchParam} placeholder='Search all gifs and stickers' />
+            <SearchButton type="submit" id="submitSearch">Search</SearchButton>
+        </SearchForm>
+        <ClearButtonContainer>
+            <ClearButton type="button" id="cleanSearch" onClick={clearSearchParam}>Clear Search</ClearButton>
+        </ClearButtonContainer>
+    </SearchBarContainer>
   )
 }

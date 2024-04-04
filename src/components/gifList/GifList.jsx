@@ -1,4 +1,5 @@
 import GifShow from '../gifShow/GifShow'
+import { GifListContainer, GifResultsContainer, LoadMoreButton, LoadMoreButtonContainer, TitleList } from './GifList.style'
 
 export default function GifList({
     gifs = [],
@@ -12,11 +13,15 @@ export default function GifList({
 
 
   return (
-    <>
-        <h2>Gif Results:</h2>
-        {gifs.length <= 0 ? <p>No Gifs to show, search a Gif!</p> : <></>}
-        {gifs.length > 0 ? renderGifs : <></>}
-        {gifs.length > 0 ? <button onClick={handleLoadMore}>Load More</button> : <></>}
-    </>
+    <GifListContainer>
+        <TitleList>Gif Results:</TitleList>
+        <GifResultsContainer>
+            {gifs.length <= 0 ? <p>No Gifs to show, search a Gif!</p> : <></>}
+            {gifs.length > 0 ? renderGifs : <></>}
+            <LoadMoreButtonContainer>
+                {gifs.length > 0 ? <LoadMoreButton onClick={handleLoadMore}>Load More</LoadMoreButton> : <></>}
+            </LoadMoreButtonContainer>
+        </GifResultsContainer>
+    </GifListContainer>
   )
 }
